@@ -1,4 +1,4 @@
-const RESPONSE_CODES = require("responseCodes")
+const RESPONSE_CODES = require("./responseCodes")
 
 const response = (responseCode, data, res, status) => {
     let dataToSent = {

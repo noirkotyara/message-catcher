@@ -1,4 +1,4 @@
-const RESPONSE_CODE = {
+const RESPONSE_CODES = {
     DB_ERROR: "DB_ERROR",
     PROCESS_ERROR: "PROCESS_ERROR",
     UNKNOWN_ERROR: "UNKNOWN_ERROR",
@@ -7,4 +7,4 @@ const RESPONSE_CODE = {
     REQ_VALID_ERROR: "REQ_VALID_ERROR",
 };
 
-module.exports = RESPONSE_CODE
+module.exports = RESPONSE_CODES

@@ -1,5 +1,5 @@
 {
-  "name": "response-middleware",
+  "name": "message-catcher",
   "version": "1.0.0",
   "description": "Middleware helps to catch any kind of error of messages for success response",
   "main": "app.js",

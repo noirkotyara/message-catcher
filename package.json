@@ -1,7 +1,7 @@
 {
-  "name": "response-controller",
+  "name": "response-middleware",
   "version": "1.0.0",
-  "description": "",
+  "description": "Middleware helps to catch any kind of error of messages for success response",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

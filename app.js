@@ -1,72 +1,58 @@
+const expressValidation = require("express-validation");
+
 const RESPONSE_CODES = require("./responseCodes")
 
-const response = (responseCode, data, res, status) => {
-    let dataToSent = {
-        timestamp: Date.now(),
-        status,
-    };
-    switch (responseCode) {
-        case RESPONSE_CODES.DB_ERROR: {
-            const message = data.errors.map((err) => err.message).join("/n");
-            dataToSent = {
-                ...dataToSent,
-                message,
-                errorCode: RESPONSE_CODES.DB_ERROR,
-                data: null,
-            };
-            return res.status(status).json(dataToSent);
-        }
-        case RESPONSE_CODES.PROCESS_ERROR: {
-            dataToSent = {
-                ...dataToSent,
-                message: data,
-                errorCode: RESPONSE_CODES.PROCESS_ERROR,
-                data: null,
-            };
-            break;
-        }
-        case RESPONSE_CODES.BASIC_SUCCESS: {
-            dataToSent = {
-                ...dataToSent,
-                message: data,
-                errorCode: null,
-                data: null,
-            };
-            break;
-        }
-        case RESPONSE_CODES.SUCCESS: {
-            dataToSent = {
-                ...dataToSent,
-                message: data.message,
-                errorCode: null,
-                data: data.data,
-            };
-            break;
-        }
-        case RESPONSE_CODES.REQ_VALID_ERROR: {
-            const message = data.details.body
-                .map((bodyData) => bodyData.message)
-                .join("/n");
-            dataToSent = {
-                ...dataToSent,
-                message,
-                errorCode: RESPONSE_CODES.REQ_VALID_ERROR,
-                data: null,
-            };
-            break;
-        }
-        default: {
-            dataToSent = {
-                timestamp: Date.now(),
-                message: "Unknown error",
-                status: 520,
-                errorCode: RESPONSE_CODES.UNKNOWN_ERROR,
-                data: null,
-            };
-            return res.status(520).json(dataToSent);
-        }
-    }
-    return res.status(status).json(dataToSent);
-};
+function responseMiddleware(error, req, res, next) {
+    try {
+        let dataToSent = {
+            timestamp: Date.now(),
+            status: error.status,
+        };
 
-module.exports = { sendResponse: response, RESPONSE_CODES };
+        if (error instanceof expressValidation.ValidationError) {
+            var createdMessage = error.details.body
+                .map(function (bodyData) {
+                    return bodyData.message;
+                })
+                .join("/n");
+
+            Object.assign(dataToSent, {
+                status: 400,
+                statusCode: RESPONSE_CODES.REQ_VALID_ERROR,
+                message: createdMessage,
+                data: null,
+            });
+        }
+
+        switch (error.responseCode) {
+            case RESPONSE_CODES.PROCESS_ERROR: {
+                Object.assign(dataToSent, {
+                    message: error.data,
+                    errorCode: RESPONSE_CODES.PROCESS_ERROR,
+                    data: null,
+                });
+                break;
+            }
+            case RESPONSE_CODES.BASIC_SUCCESS: {
+                Object.assign(dataToSent, {
+                    message: error.data,
+                    errorCode: null,
+                    data: null,
+                });
+                break;
+            }
+            case RESPONSE_CODES.SUCCESS: {
+                Object.assign(dataToSent, {
+                    message: error.data.message,
+                    errorCode: null,
+                    data: error.data.data,
+                });
+                break;
+            }
+        }
+        return res.status(dataToSent.status).json(dataToSent);
+    } catch (e) {
+        console.log("RESPONSE_HANDLER_CATCH", e);
+    }
+}
+module.exports = { sendResponse: responseMiddleware, RESPONSE_CODES };

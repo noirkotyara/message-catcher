@@ -21,6 +21,6 @@
   },
   "homepage": "https://github.com/noirkotyara/response-controller#readme",
   "dependencies": {
-    "lodash": "^4.17.21"
+    "express-validation": "^3.0.8"
   }
 }

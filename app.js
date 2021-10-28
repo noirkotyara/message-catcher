@@ -61,6 +61,17 @@ function responseHandler(error, req, res, next) {
                 });
                 break;
             }
+            case RESPONSE_CODES.DB_ERROR: {
+                const message = error.data.errors.map((err) => err.message).join("/n");
+                dataToSent = {
+                    ...dataToSent,
+                    message,
+                    errorCode: RESPONSE_CODES.DB_ERROR,
+                    status: 400,
+                    data: null,
+                };
+                return res.status(status).json(dataToSent);
+            }
             case RESPONSE_CODES.BASIC_SUCCESS: {
                 Object.assign(dataToSent, {
                     status: 200,

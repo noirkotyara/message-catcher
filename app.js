@@ -61,11 +61,20 @@ function responseHandler(error, req, res, next) {
                 });
                 break;
             }
-            case RESPONSE_CODES.DB_ERROR: {
+            case RESPONSE_CODES.DB_ERROR_SEQUELIZE: {
                 const message = error.data.errors.map((err) => err.message).join("/n");
                 Object.assign(dataToSent, {
                     message: message,
-                    errorCode: RESPONSE_CODES.DB_ERROR,
+                    errorCode: RESPONSE_CODES.DB_ERROR_SEQUELIZE,
+                    status: 400,
+                    data: null,
+                });
+                break;
+            }
+            case RESPONSE_CODES.DB_ERROR_MYSQL: {
+                Object.assign(dataToSent, {
+                    message: error.sqlMessage,
+                    errorCode: RESPONSE_CODES.DB_ERROR_MYSQL,
                     status: 400,
                     data: null,
                 });

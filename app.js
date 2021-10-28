@@ -36,7 +36,7 @@ function responseHandler(error, req, res, next) {
             }
             case RESPONSE_CODES.P_ERROR__NOT_FOUND: {
                 Object.assign(dataToSent, {
-                    errorCode: RESPONSE_CODESS.P_ERROR__NOT_FOUND,
+                    errorCode: RESPONSE_CODES.P_ERROR__NOT_FOUND,
                     status: 404,
                     message: error.data,
                     data: null,

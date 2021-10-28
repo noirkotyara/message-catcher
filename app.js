@@ -6,7 +6,7 @@ function responseHandler(error, req, res, next) {
     try {
         var dataToSent = {
             timestamp: Date.now(),
-            status: 500,
+            status: 503,
         };
 
         if (error instanceof expressValidation.ValidationError) {

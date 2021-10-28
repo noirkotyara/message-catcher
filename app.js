@@ -73,7 +73,7 @@ function responseHandler(error, req, res, next) {
             }
             case RESPONSE_CODES.DB_ERROR_MYSQL: {
                 Object.assign(dataToSent, {
-                    message: error.sqlMessage,
+                    message: error.data.sqlMessage,
                     errorCode: RESPONSE_CODES.DB_ERROR_MYSQL,
                     status: 400,
                     data: null,

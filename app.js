@@ -1,6 +1,6 @@
 var expressValidation = require("express-validation");
 
-var RESPONSE_CODE = require("./responseCodes");
+var RESPONSE_CODES = require("./responseCodes");
 
 function responseHandler(error, req, res, next) {
     try {
@@ -17,7 +17,7 @@ function responseHandler(error, req, res, next) {
                 .join("/n");
 
             Object.assign(dataToSent, {
-                statusCode: RESPONSE_CODE.REQ_VALID_ERROR,
+                statusCode: RESPONSE_CODES.REQ_VALID_ERROR,
                 status: 400,
                 message: createdMessage,
                 data: null,
@@ -25,43 +25,43 @@ function responseHandler(error, req, res, next) {
         }
 
         switch (error.responseCode) {
-            case RESPONSE_CODE.P_ERROR__FORBIDDEN: {
+            case RESPONSE_CODES.P_ERROR__FORBIDDEN: {
                 Object.assign(dataToSent, {
-                    errorCode: RESPONSE_CODE.P_ERROR__FORBIDDEN,
+                    errorCode: RESPONSE_CODES.P_ERROR__FORBIDDEN,
                     status: 403,
                     message: error.data,
                     data: null,
                 });
                 break;
             }
-            case RESPONSE_CODE.P_ERROR__NOT_FOUND: {
+            case RESPONSE_CODES.P_ERROR__NOT_FOUND: {
                 Object.assign(dataToSent, {
-                    errorCode: RESPONSE_CODE.P_ERROR__NOT_FOUND,
+                    errorCode: RESPONSE_CODESS.P_ERROR__NOT_FOUND,
                     status: 404,
                     message: error.data,
                     data: null,
                 });
                 break;
             }
-            case RESPONSE_CODE.P_ERROR__UNAUTHORIZED: {
+            case RESPONSE_CODES.P_ERROR__UNAUTHORIZED: {
                 Object.assign(dataToSent, {
-                    errorCode: RESPONSE_CODE.P_ERROR__UNAUTHORIZED,
+                    errorCode: RESPONSE_CODES.P_ERROR__UNAUTHORIZED,
                     status: 401,
                     message: error.data,
                     data: null,
                 });
                 break;
             }
-            case RESPONSE_CODE.S_ERROR_INTERNAL: {
+            case RESPONSE_CODES.S_ERROR_INTERNAL: {
                 Object.assign(dataToSent, {
-                    errorCode: RESPONSE_CODE.S_ERROR_INTERNAL,
+                    errorCode: RESPONSE_CODES.S_ERROR_INTERNAL,
                     status: 500,
                     message: error.data,
                     data: null,
                 });
                 break;
             }
-            case RESPONSE_CODE.BASIC_SUCCESS: {
+            case RESPONSE_CODES.BASIC_SUCCESS: {
                 Object.assign(dataToSent, {
                     status: 200,
                     message: error.data,
@@ -70,7 +70,7 @@ function responseHandler(error, req, res, next) {
                 });
                 break;
             }
-            case RESPONSE_CODE.BASIC_SUCCESS__CREATED: {
+            case RESPONSE_CODES.BASIC_SUCCESS__CREATED: {
                 Object.assign(dataToSent, {
                     status: 201,
                     message: error.data,
@@ -79,7 +79,7 @@ function responseHandler(error, req, res, next) {
                 });
                 break;
             }
-            case RESPONSE_CODE.SUCCESS: {
+            case RESPONSE_CODES.SUCCESS: {
                 Object.assign(dataToSent, {
                     status: 200,
                     message: error.data.message,
@@ -88,7 +88,7 @@ function responseHandler(error, req, res, next) {
                 });
                 break;
             }
-            case RESPONSE_CODE.SUCCESS__CREATED: {
+            case RESPONSE_CODES.SUCCESS__CREATED: {
                 Object.assign(dataToSent, {
                     status: 201,
                     message: error.data.message,
@@ -107,4 +107,5 @@ function responseHandler(error, req, res, next) {
 
 module.exports = {
     sendResponse: responseHandler,
+    RESPONSE_CODES: RESPONSE_CODES
 };

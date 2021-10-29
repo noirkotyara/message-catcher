@@ -1,5 +1,7 @@
 var expressValidation = require("express-validation");
 
+var helpers = require("./helpers");
+
 var RESPONSE_CODES = require("./responseCodes");
 
 function responseHandler(error, req, res, next) {
@@ -62,14 +64,7 @@ function responseHandler(error, req, res, next) {
                 break;
             }
             case RESPONSE_CODES.DB_ERROR_SEQUELIZE: {
-                var errorMessage = 'no message available'
-                if(error.data.name === 'SequelizeValidationError')
-                {
-                    errorMessage = error.data.errors.map((err) => err.message).join("/n")
-                }
-                if(error.data.name === "SequelizeDatabaseError"){
-                    errorMessage = error.data.parent.sqlMessage
-                }
+                var errorMessage = helpers.getErrorMessageForSequelize(error.data)
                 Object.assign(dataToSent, {
                     message: errorMessage,
                     errorCode: RESPONSE_CODES.DB_ERROR_SEQUELIZE,

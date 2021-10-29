@@ -1,10 +1,10 @@
 function getErrorMessageForSequelize(errorData) {
     var errorMessage = 'no message provided'
-    if(_hasArrayErrors(errorData.errors)){
+    if(_hasArrayErrors(errorData)){
         errorMessage = errorData.errors.map((err) => err.message).join("/n")
     }
     if(_hasObjectParent(errorData)){
-        errorMessage = errorData.parent.sqlMessage
+        errorMessage += errorData.parent.sqlMessage
     }
     return errorMessage
 }

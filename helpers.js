@@ -4,7 +4,7 @@ function getErrorMessageForSequelize(errorData) {
         errorMessage = errorData.errors.map((err) => err.message).join("/n")
     }
     if(_hasObjectParent(errorData)){
-        errorMessage += errorData.parent.sqlMessage
+        errorMessage += "/n" + errorData.parent.sqlMessage
     }
     return errorMessage
 }

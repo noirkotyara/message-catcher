@@ -1,5 +1,3 @@
-export {};
-
 declare global {
   enum RESPONSE_CODES {
     P_ERROR__FORBIDDEN = "P_ERROR_F",
@@ -16,3 +14,4 @@ declare global {
     SUCCESS__CREATED = "SUCCESS_C",
   }
 }
+export { RESPONSE_CODES };

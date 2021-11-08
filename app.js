@@ -1,6 +1,6 @@
-import expressValidation from "express-validation";
+const expressValidation = require("express-validation");
 
-import RESPONSE_CODES from "./responseCodes";
+const RESPONSE_CODES = require("./responseCodes");
 
 function responseHandler(error, req, res, next) {
   try {

@@ -1,5 +1,6 @@
 function getErrorMessageForSequelize(errorData) {
     var errorMessage = 'no message provided'
+    console.log('errorDataerrorDataerrorDataerrorData',errorData)
     if(_hasArrayErrors(errorData)){
         errorMessage = errorData.errors.map((err) => err.message).join("/n")
     }

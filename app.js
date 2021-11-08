@@ -65,7 +65,7 @@ function responseHandler(error, req, res, next) {
             }
             case RESPONSE_CODES.DB_ERROR_SEQUELIZE: {
                 console.log('RESPONSE_CODES.DB_ERROR_SEQUELIZE', error)
-                var errorMessage = helpers.getErrorMessageForSequelize(error.data)
+                var errorMessage = error.data
                 Object.assign(dataToSent, {
                     message: errorMessage,
                     errorCode: RESPONSE_CODES.DB_ERROR_SEQUELIZE,

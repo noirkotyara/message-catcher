@@ -13,5 +13,19 @@ declare global {
     BASIC_SUCCESS__CREATED = "BASIC_SUCCESS_CREATED",
     SUCCESS__CREATED = "SUCCESS_C",
   }
+  type ResponseToSent = {
+    timestamp: number;
+    status: number;
+    errorCode: RESPONSE_CODES | null;
+    message: string;
+    data: null | unknown;
+  };
+  type FormedResponse = {
+    responseCode: RESPONSE_CODES;
+    data?: { data: unknown; message: string };
+    message?: string;
+    details?: { body: [{ message: string }] };
+    dbData?: { sqlMessage: string };
+  };
 }
-export { RESPONSE_CODES };
+export { RESPONSE_CODES, ResponseToSent, FormedResponse };

@@ -2,7 +2,7 @@
   "name": "message-catcher",
   "version": "1.0.0",
   "description": "Middleware helps to catch any kind of error of messages for success response",
-  "main": "app.ts",
+  "main": "app.js",
   "types": "index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -1,15 +1,10 @@
-const { FormedResponse, RESPONSE_CODES, ResponseToSent } = require("./index");
+const { RESPONSE_CODES } = require("./index");
 
 const expressValidation = require("express-validation");
 
-const responseHandler = (
-  formedResponse: typeof FormedResponse,
-  req,
-  res,
-  next
-) => {
+const responseHandler = (formedResponse, req, res, next) => {
   try {
-    let responseToSent: typeof ResponseToSent = {
+    let responseToSent = {
       timestamp: Date.now(),
       errorCode: RESPONSE_CODES.UNKNOWN_ERROR,
       status: 503,

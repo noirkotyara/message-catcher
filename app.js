@@ -1,4 +1,4 @@
-const { RESPONSE_CODES } = require("./response-codes");
+const RESPONSE_CODES = require("./response-codes");
 
 const expressValidation = require("express-validation");
 

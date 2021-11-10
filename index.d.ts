@@ -1,3 +1,5 @@
+import { NextFunction, Request, Response } from "express";
+
 declare global {
   enum RESPONSE_CODES {
     P_ERROR__FORBIDDEN = "P_ERROR_F",
@@ -13,6 +15,12 @@ declare global {
     BASIC_SUCCESS__CREATED = "BASIC_SUCCESS_CREATED",
     SUCCESS__CREATED = "SUCCESS_C",
   }
+  const sendResponse: (
+    formedResponse: FormedResponse,
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => void;
   type ResponseToSent = {
     timestamp: number;
     status: number;
@@ -28,4 +36,4 @@ declare global {
     dbData?: { sqlMessage: string };
   };
 }
-export { RESPONSE_CODES, ResponseToSent, FormedResponse };
+export { RESPONSE_CODES, ResponseToSent, FormedResponse, sendResponse };

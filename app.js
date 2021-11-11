@@ -2,7 +2,7 @@ const RESPONSE_CODES = require("./response-codes");
 
 const expressValidation = require("express-validation");
 
-const { getErrorMessageForSequelize } = require("./helpers");
+const { getErrorMessageForSequelize, isAxiosError } = require("./helpers");
 
 const responseHandler = (formedResponse, req, res, next) => {
   try {
@@ -25,6 +25,11 @@ const responseHandler = (formedResponse, req, res, next) => {
         status: 400,
         message: createdMessage,
       };
+    }
+
+    if (isAxiosError(error)) {
+      responseToSent = error.response.data;
+      return res.status(responseToSent.status).json(responseToSent);
     }
 
     switch (formedResponse.responseCode) {
@@ -65,7 +70,9 @@ const responseHandler = (formedResponse, req, res, next) => {
         break;
       }
       case RESPONSE_CODES.DB_ERROR_SEQUELIZE: {
-        const createdMessage = getErrorMessageForSequelize(formedResponse.message);
+        const createdMessage = getErrorMessageForSequelize(
+          formedResponse.message
+        );
         responseToSent = {
           ...responseToSent,
           status: 400,

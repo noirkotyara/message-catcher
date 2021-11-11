@@ -17,6 +17,11 @@ function _hasObjectParent(errorData) {
   return Object.prototype.toString.call(errorData.parent) === "[object Error]";
 }
 
+function isAxiosError(error) {
+  return error.isAxiosError;
+}
+
 module.exports = {
   getErrorMessageForSequelize: getErrorMessageForSequelize,
+  isAxiosError: isAxiosError,
 };

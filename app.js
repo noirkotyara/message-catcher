@@ -27,8 +27,8 @@ const responseHandler = (formedResponse, req, res, next) => {
       };
     }
 
-    if (isAxiosError(error)) {
-      responseToSent = error.response.data;
+    if (isAxiosError(formedResponse)) {
+      responseToSent = formedResponse.response.data;
       return res.status(responseToSent.status).json(responseToSent);
     }
 

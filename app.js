@@ -2,6 +2,8 @@ const RESPONSE_CODES = require("./response-codes");
 
 const expressValidation = require("express-validation");
 
+const { getErrorMessageForSequelize } = require("./helpers");
+
 const responseHandler = (formedResponse, req, res, next) => {
   try {
     let responseToSent = {
@@ -63,11 +65,12 @@ const responseHandler = (formedResponse, req, res, next) => {
         break;
       }
       case RESPONSE_CODES.DB_ERROR_SEQUELIZE: {
+        const createdMessage = getErrorMessageForSequelize(formedResponse.data);
         responseToSent = {
           ...responseToSent,
           status: 400,
           errorCode: RESPONSE_CODES.DB_ERROR_SEQUELIZE,
-          message: formedResponse.message,
+          message: createdMessage,
         };
         break;
       }

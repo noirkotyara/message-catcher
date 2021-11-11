@@ -65,7 +65,7 @@ const responseHandler = (formedResponse, req, res, next) => {
         break;
       }
       case RESPONSE_CODES.DB_ERROR_SEQUELIZE: {
-        const createdMessage = getErrorMessageForSequelize(formedResponse.data);
+        const createdMessage = getErrorMessageForSequelize(formedResponse.message);
         responseToSent = {
           ...responseToSent,
           status: 400,

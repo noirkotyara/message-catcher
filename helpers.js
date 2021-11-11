@@ -1,23 +1,22 @@
 function getErrorMessageForSequelize(errorData) {
-    var errorMessage = 'no message provided'
+  if (_hasArrayErrors(errorData)) {
+    return errorData.errors.map((err) => err.message).join("/n");
+  }
+  if (_hasObjectParent(errorData)) {
+    return errorData.parent.sqlMessage;
+  }
 
-    if(_hasArrayErrors(errorData)){
-        errorMessage = errorData.errors.map((err) => err.message).join("/n")
-    }
-    if(_hasObjectParent(errorData)){
-        errorMessage += "/n" + errorData.parent.sqlMessage
-    }
-    return errorMessage
+  return JSON.stringify(errorData);
 }
 
 function _hasArrayErrors(errorData) {
-    return Object.prototype.toString.call(errorData.errors) === "[object Array]";
+  return Object.prototype.toString.call(errorData.errors) === "[object Array]";
 }
 
 function _hasObjectParent(errorData) {
-    return Object.prototype.toString.call(errorData.parent) === "[object Object]";
+  return Object.prototype.toString.call(errorData.parent) === "[object Error]";
 }
 
 module.exports = {
-    getErrorMessageForSequelize: getErrorMessageForSequelize
-}
+  getErrorMessageForSequelize: getErrorMessageForSequelize,
+};
